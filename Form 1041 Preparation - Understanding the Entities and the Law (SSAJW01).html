@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play M3U8 Stream</title>
+</head>
+<body>
+    <h1>Form 1041 Preparation - Understanding the Entities and the Law (SSAJW01)</h1>
+    <video id="videoPlayer" controls width="640" height="360" autoplay></video>
+
+    <!-- Include hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const video = document.getElementById('videoPlayer');
+        const videoSrc = 'https://stream.mux.com/mnKG7HT4OvW6cNGJcRC01ATAowjYDoB00aSHnWT01owjYk.m3u8'; // Provided .m3u8 URL
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            // For Safari and iOS (native HLS support)
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+            });
+        } else {
+            console.error('This browser does not support HLS playback.');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
